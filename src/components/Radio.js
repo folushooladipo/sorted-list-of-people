@@ -2,37 +2,52 @@ import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 
 class Radio extends Component {
-	constructor() {
-        super()
-		this.state = {
-			radioClick: "name"
-		};
-	}
+    constructor() {
+        super();
 
-	onChange(type) {
-		// on radio state change handler
-	}
+        this.state = {
+            currentSortParam: null
+        };
+    }
 
-	render() {
-		return (
-  <div className='radioButtons'>
-    <div className='left'>
-      <input type='radio' />
-      <label>&nbsp;&nbsp;Sort by name</label>
-    </div>
-    <div className='right'>
-      <input type='radio' />
-      <label>&nbsp;&nbsp;Sort by age</label>
-    </div>
-  </div>
-);
+    onChange(sortParam) {
+        this.setState({ currentSortParam: sortParam });
+        this.props.setSortParam(sortParam);
+    }
 
-	}
+    render() {
+        return (
+            <div className='radioButtons'>
+                <div
+                    className='left'
+                    onClick={() => this.onChange('name')}
+                >
+                    <input
+                        type='radio'
+                        readOnly
+                        checked={this.state.currentSortParam === 'name'}
+                    />
+                    <label>&nbsp;&nbsp;Sort by name</label>
+                </div>
+                <div
+                    className='right'
+                    onClick={() => this.onChange('age')}
+                >
+                    <input
+                        type='radio'
+                        readOnly
+                        checked={this.state.currentSortParam === 'age'}
+                    />
+                    <label>&nbsp;&nbsp;Sort by age</label>
+                </div>
+            </div>
+        );
+
+    }
 }
 
-// Uncomment the snippet below
-// Radio.propTypes = {
-// 	sortBy: PropTypes.func
-// }
+Radio.propTypes = {
+	setSortParam: PropTypes.func.isRequired
+};
 
 export default Radio;
